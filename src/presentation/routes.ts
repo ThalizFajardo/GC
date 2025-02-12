@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { UserRoutes } from "./users/user.routes";
 
 
 export class AppRoutes {
@@ -6,7 +7,7 @@ export class AppRoutes {
     const router = Router();
 
     // Registrando las rutas...
-   
+    router.use("/api/users", UserRoutes.routes);
 
     return router;
   }

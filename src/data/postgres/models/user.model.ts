@@ -1,8 +1,9 @@
 // src/data/postgress/models/user.model.ts
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, BaseEntity,BeforeInsert, PrimaryGeneratedColumn, Column } from "typeorm";
+import { encriptAdapter } from "../../../config";
 
 @Entity("users")
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -21,6 +22,14 @@ export class User {
   @Column({ length: 255 })
   password: string;
 
+  @Column({ length: 255 })
+  pin: string;
+
   @Column({ default: true })
   status: boolean;
+
+  @BeforeInsert()
+  encryptedPassword() {
+    this.password = encriptAdapter.hash(this.password)
+  }
 }
