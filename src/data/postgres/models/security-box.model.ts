@@ -1,24 +1,38 @@
-// src/data/postgress/models/security-box.model.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { User } from "./user.model";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { CredentialStorage } from "./credetia-storage"; 
 
-@Entity("security_box")
-export class SecurityBox {
-  @PrimaryGeneratedColumn("uuid")
-  id: string;
+export enum securityBoxStatus {
+  ACTIVE = "ACTIVE",
+  DELETED = "DELETED",
+}
 
-  @Column({ length: 100 })
-  name: string;
 
-  @Column({ default: true })
+
+@Entity()
+export class SecurityBox extends BaseEntity {
   favorite: boolean;
 
-  @Column({ length: 20 })
+  @Column({ length: 20, type: "varchar" })
   icon: string;
 
-  @Column({ type: "enum", enum: ["ACTIVE", "DELETED"], default: "ACTIVE" })
-  status: string;
+  @Column({
+      type: "enum",
+      enum: securityBoxStatus,
+      default: securityBoxStatus.ACTIVE,
+  })
+  status: securityBoxStatus;
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.securityBoxes)
+  @JoinColumn({ name: "user_id" })
   user: User;
+
+  @OneToMany(
+      () => CredentialStorage,
+      (credentialStorage) => credentialStorage.securityBox
+  )
+  credentialStorages: CredentialStorage[];
+
+  @CreateDateColumn({ type: "timestamp", default: () => "CURRENT_TIMESTAMP" })
+  createdAt: Date;
 }
