@@ -1,10 +1,10 @@
 // src/data/postgress/models/credential-storage.model.ts
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, BaseEntity } from "typeorm";
 import { SecurityBox } from "./security-box.model";
 import { Pin } from "./pin.model";
 
 @Entity("credential_storage")
-export class CredentialStorage {
+export class CredentialStorage extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
@@ -26,7 +26,7 @@ export class CredentialStorage {
   @ManyToOne(() => SecurityBox, (securityBox) => securityBox.credentialStorages)
   securityBox: SecurityBox;
 
-  @ManyToOne(() => Pin, (pin) => pin.credentialStorages)
+  @ManyToOne(() => Pin, (pin) => pin.CredentialStorages)
   @JoinColumn({name : "pin_id"})
   pin: Pin;
 }

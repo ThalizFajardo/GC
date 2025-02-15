@@ -7,7 +7,7 @@ export class AppRoutes {
     const router = Router();
 
     // Registrando las rutas...
-    router.use("/api/users", UserRoutes.routes);
+    router.use("/api/v1/user", UserRoutes.routes);
 
     return router;
   }

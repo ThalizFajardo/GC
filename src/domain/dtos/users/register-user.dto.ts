@@ -8,11 +8,12 @@ export class RegisterUserDTO {
     public surname: string,
     public email: string,
     public cellphone: string,
-    public password: string,   
+    public password: string,
+    public pin: string,   
   ) { }
 
   static create(object: { [key: string]: any }): [string?, RegisterUserDTO?] {
-    const { name,surname, email,cellphone, password, role } = object;
+    const { name,surname, email,cellphone, password, pin } = object;
 
     if (!name) return ["⚠️ Missing name 🚫"];
     if (!surname) return ["⚠️ Missing surname 🚫"];
@@ -25,7 +26,7 @@ export class RegisterUserDTO {
       ];
       
     return [undefined,
-      new RegisterUserDTO(name,surname, email, cellphone, password)];
+      new RegisterUserDTO(name,surname, email, cellphone, password, pin)];
 
   }
 

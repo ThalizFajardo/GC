@@ -1,5 +1,5 @@
 import { User } from "./user.model";
-import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
+import { BaseEntity, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { CredentialStorage } from "./credetia-storage"; 
 
 export enum securityBoxStatus {
@@ -11,6 +11,13 @@ export enum securityBoxStatus {
 
 @Entity()
 export class SecurityBox extends BaseEntity {
+  @PrimaryGeneratedColumn("uuid")
+  id: string;
+  
+  @Column({length:100, type:"varchar"})
+  name: string;
+
+ @Column({default:true})
   favorite: boolean;
 
   @Column({ length: 20, type: "varchar" })

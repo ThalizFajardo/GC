@@ -12,7 +12,8 @@ import { CredentialStorage } from "./credetia-storage";
 import { User } from "./user.model";
 
 @Entity("pin")
-export class Pin {
+export class Pin extends BaseEntity{
+  
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
